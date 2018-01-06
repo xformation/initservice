@@ -28,12 +28,6 @@ import com.synectiks.commons.constants.IDBConsts;
 import com.synectiks.commons.entities.SSMState;
 import com.synectiks.commons.utils.IUtils;
 import com.synectiks.schemas.entities.EntityClasses;
-import com.synectiks.schemas.entities.Permission;
-import com.synectiks.schemas.entities.Role;
-import com.synectiks.schemas.entities.User;
-import com.synectiks.schemas.repositories.PermissionRepository;
-import com.synectiks.schemas.repositories.RoleRepository;
-import com.synectiks.schemas.repositories.UserRepository;
 import com.synectiks.schemas.utils.DDBUtils;
 
 /**
@@ -56,13 +50,6 @@ public class DynamoDBInit {
 
 	@Autowired
 	private DynamoDB dynamoDB;
-
-	@Autowired
-	private UserRepository userRepo;
-	@Autowired
-	private RoleRepository roleRepo;
-	@Autowired
-	private PermissionRepository permRepo;
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -93,7 +80,6 @@ public class DynamoDBInit {
 						result.getTableDescription().getTableStatus());
 			}
 		}
-		loadInitialAuthData();
 		loadInitialStates();
 	}
 
@@ -126,44 +112,6 @@ public class DynamoDBInit {
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-		}
-	}
-
-	/**
-	 * Method to check and load initial entry data.
-	 */
-	private void loadInitialAuthData() {
-		try {
-			Permission perm = null;
-			Role role = null;
-			User user = null;
-			if (!IUtils.isNull(permRepo)) {
-				logger.info("Size of permissions: " + permRepo.count());
-				if (permRepo.count() == 0) {
-					perm = DDBUtils.createAdminPermission();
-					perm = permRepo.save(perm);
-				}
-				logger.info("Permissions: " + perm);
-			}
-			if (!IUtils.isNull(roleRepo)) {
-				logger.info("Size of roles: " + roleRepo.count());
-				if (roleRepo.count() == 0) {
-					role = DDBUtils.createAdminRole(perm);
-					role = roleRepo.save(role);
-				}
-				logger.info("Role: " + role);
-			}
-			if (!IUtils.isNull(userRepo)) {
-				logger.info("Size of users: " + userRepo.count());
-				if (userRepo.count() == 0) {
-					user = DDBUtils.createAdminUser(role);
-					user = userRepo.save(user);
-				}
-				logger.info("User: " + user);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
 		}
 	}
 

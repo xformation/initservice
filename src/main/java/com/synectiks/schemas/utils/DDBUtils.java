@@ -14,15 +14,9 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 import com.amazonaws.services.dynamodbv2.model.GetItemResult;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.synectiks.commons.constants.IConsts;
 import com.synectiks.commons.constants.IDBConsts;
 import com.synectiks.commons.utils.IUtils;
-import com.synectiks.schemas.entities.Permission;
-import com.synectiks.schemas.entities.Role;
-import com.synectiks.schemas.entities.User;
-import com.synectiks.schemas.entities.User.Types;
 
 /**
  * @author Rajesh
@@ -97,46 +91,6 @@ public interface DDBUtils {
 			throw new Exception("Key or value is null or empty.");
 		}
 		return true;
-	}
-
-	/**
-	 * Method to create default admin permission
-	 * @return
-	 */
-	static Permission createAdminPermission() {
-		Permission permis = new Permission();
-		permis.setName(IConsts.ADMIN);
-		permis.setPermission("*");
-		permis.setDescription("All permission to admin");
-		return permis;
-	}
-
-	/**
-	 * Create admin Role for application
-	 * @param permis
-	 * @return
-	 */
-	static Role createAdminRole(Permission permis) {
-		Role role = new Role();
-		role.setName("ROLE_" + IConsts.ADMIN);
-		role.setPermissions(Lists.newArrayList(permis));
-		role.setDescription("Admin role with access to all permission");
-		return role;
-	}
-
-	/**
-	 * Method to create admin user
-	 * @param role
-	 * @return
-	 */
-	static User createAdminUser(Role role) {
-		User user = new User();
-		user.setUsername(IConsts.ADMIN.toLowerCase());
-		user.setPassword(IUtils.encrypt(IConsts.ADMIN.toLowerCase()));
-		user.setType(Types.SUPER);
-		user.setRoles(Lists.newArrayList(role));
-		//user.setEmail("");
-		return user;
 	}
 
 	/**
