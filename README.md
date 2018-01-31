@@ -1,28 +1,29 @@
-# initservicen #
+# initservice #
 
 ### What is this repository for? ###
 A config service for any base application , it initializes jcrservice and workflow services with initial data and configure them
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### How to import project for editing ###
 
-### How do I get set up? ###
+* Import as maven project in your IDE
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Build, install and run application ###
 
-### Contribution guidelines ###
+To get started build the build the latest sources with Maven 3 and Java 8 
+(or higher). 
 
-* Writing tests
-* Code review
-* Other guidelines
+	$ cd initservice
+	$ mvn clean install 
+
+You can run this application as spring-boot app by following command:
+
+	$ mvn spring-boot:run
+
+Once done you can run the application by executing
+
+	$ java -jar target/schemas-exec.jar
+
 
 ### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+	Please mail me on
+	sharmanju80@gmail.com
