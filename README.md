@@ -25,5 +25,5 @@ Once done you can run the application by executing
 
 
 ### Who do I talk to? ###
-	Please mail me on
-	sharmanju80@gmail.com
+	Please mail us on
+	info@syenctiks.com
