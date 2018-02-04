@@ -1,7 +1,6 @@
 package com.synectiks.schemas.config;
 
 import java.io.File;
-import java.net.URL;
 import java.util.UUID;
 
 import org.codehaus.jettison.json.JSONArray;
@@ -88,30 +87,46 @@ public class DynamoDBInit {
 	 */
 	private void loadInitialStates() {
 		try {
-			//ClassPathResource res = new ClassPathResource("statesJson.json");
-			URL res = this.getClass().getClassLoader().getResource(statesFileName);
-			File file = new File(res.getPath());
+			File file = DDBUtils.loadResourceFile(
+					this.getClass().getClassLoader(), statesFileName);
 			Table tblStates = dynamoDB.getTable(IDBConsts.Tbl_SSM_STATE);
-			logger.info("Path: " + res.getPath() + ", file: " + file.exists());
-			if (file.exists() && DDBUtils.isTableEmpty(dbMapper, SSMState.class)) {
+			if (!IUtils.isNull(file) && file.exists() &&
+					DDBUtils.isTableEmpty(dbMapper, SSMState.class)) {
 				logger.info("States table is empty");
-				JSONArray jArr = new JSONArray(IUtils.readStringFromFile(file));
-				for (int i = 0; i < jArr.length(); i++) {
-					JSONObject jObj = jArr.getJSONObject(i);
-					JSONArray names = jObj.names();
-					Item state = new Item()
-							.with(IDBConsts.Col_ID, UUID.randomUUID().toString());
-					for (int j = 0; j < names.length(); j++) {
-						String key = names.getString(j);
-						state.with(key, jObj.opt(key));
-					}
-					logger.info("Row: " + state);
-					tblStates.putItem(state);
-					tblStates.waitForActive();
-				}
+				insertRowsInTableFromFile(file, tblStates);
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
+		}
+	}
+
+	/**
+	 * Method to insert states information into table
+	 * @param file
+	 * @param tblStates
+	 * @throws Exception
+	 */
+	private void insertRowsInTableFromFile(File file, Table tblStates) throws Exception {
+		JSONObject json = new JSONObject(IUtils.readStringFromFile(file));
+		JSONArray ssmIds = json.names();
+		for (int x = 0; x < ssmIds.length(); x++) {
+			String ssmId = ssmIds.getString(x);
+			JSONArray jArr = json.optJSONArray(ssmId);
+			for (int i = 0; i < jArr.length(); i++) {
+				JSONObject jObj = jArr.getJSONObject(i);
+				JSONArray names = jObj.names();
+				Item state = new Item()
+						.with(IDBConsts.Col_ID, UUID.randomUUID().toString());
+				// Add machine name id
+				state.with("ssmId", ssmId);
+				for (int j = 0; j < names.length(); j++) {
+					String key = names.getString(j);
+					state.with(key, jObj.opt(key));
+				}
+				logger.info("Row: " + state);
+				tblStates.putItem(state);
+				tblStates.waitForActive();
+			}
 		}
 	}
 

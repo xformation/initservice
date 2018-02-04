@@ -3,6 +3,8 @@
  */
 package com.synectiks.schemas.utils;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -107,6 +109,24 @@ public interface DDBUtils {
 					.withAttributeValueList(new AttributeValue().withS(value)));
 		}
 		return exp;
+	}
+
+	/**
+	 * Method to load a file from resource using ClassLoader
+	 * @param loader
+	 * @param resName
+	 * @return
+	 */
+	static File loadResourceFile(ClassLoader loader, String resName) {
+		URL res = loader.getResource(resName);
+		File file = null;
+		if (!IUtils.isNull(res)) {
+			file = new File(res.getPath());
+			IUtils.logger.info("Path: " + res.getPath() + ", file: " + file.exists());
+			return file;
+		}
+		IUtils.logger.error(resName + " Not found!");
+		return file;
 	}
 
 }
