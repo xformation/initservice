@@ -37,6 +37,7 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 	private static final Logger logger = LoggerFactory.getLogger(DynamoDbRepository.class);
 	private static final String MSG_NULL = "Input should not be null";
 
+	@Autowired
 	private DynamoDBMapper mapper;
 	@Autowired
 	private AmazonDynamoDB dynamoDB;
@@ -47,7 +48,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 
 	public DynamoDbRepository(Class<T> clazz) {
 		this.domainClass = clazz;
-		this.mapper = new DynamoDBMapper(dynamoDB);
 	}
 
 	@Override
