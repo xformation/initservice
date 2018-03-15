@@ -14,7 +14,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 
 /**
  * @author Rajesh
@@ -41,11 +40,6 @@ public class DynamoDbConfig {
 	public DynamoDBMapper dynamoDbMapper(AmazonDynamoDB amazonDynamoDB) {
 		logger.trace("Entering dynamoDbMapper()");
 		return new DynamoDBMapper(amazonDynamoDB);
-	}
-
-	@Bean
-	public DynamoDB dynamoDb(AmazonDynamoDB amazonDynamoDB) {
-		return new DynamoDB(amazonDynamoDB);
 	}
 
 }

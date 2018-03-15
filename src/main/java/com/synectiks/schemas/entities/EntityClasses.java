@@ -4,6 +4,13 @@
 package com.synectiks.schemas.entities;
 
 import com.synectiks.commons.entities.SSMState;
+import com.synectiks.commons.entities.demo.BillingAddress;
+import com.synectiks.commons.entities.demo.Cart;
+import com.synectiks.commons.entities.demo.CartItem;
+import com.synectiks.commons.entities.demo.Customer;
+import com.synectiks.commons.entities.demo.CustomerOrder;
+import com.synectiks.commons.entities.demo.Product;
+import com.synectiks.commons.entities.demo.ShippingAddress;
 import com.synectiks.commons.entities.dynamodb.Entity;
 import com.synectiks.commons.entities.dynamodb.Service;
 import com.synectiks.commons.entities.dynamodb.Subscription;
@@ -14,6 +21,14 @@ import com.synectiks.commons.entities.dynamodb.Subscription;
  */
 public enum EntityClasses {
 
+	// demo site entities.
+	BillingAdd(BillingAddress.class),
+	Cart(Cart.class),
+	CartItem(CartItem.class),
+	Customer(Customer.class),
+	Order(CustomerOrder.class),
+	Product(Product.class),
+	ShippingAdd(ShippingAddress.class),
 	//Category(Category.class),
 	Service(Service.class),
 	States(SSMState.class),

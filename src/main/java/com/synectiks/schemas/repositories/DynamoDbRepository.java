@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
@@ -35,8 +36,10 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 
 	private static final Logger logger = LoggerFactory.getLogger(DynamoDbRepository.class);
 	private static final String MSG_NULL = "Input should not be null";
-	@Autowired
+
 	private DynamoDBMapper mapper;
+	@Autowired
+	private AmazonDynamoDB dynamoDB;
 	@Autowired
 	private ESEventPublisher publisher;
 
@@ -44,6 +47,7 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 
 	public DynamoDbRepository(Class<T> clazz) {
 		this.domainClass = clazz;
+		this.mapper = new DynamoDBMapper(dynamoDB);
 	}
 
 	@Override
