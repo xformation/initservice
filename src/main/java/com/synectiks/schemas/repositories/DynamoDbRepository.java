@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
@@ -39,8 +38,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 
 	@Autowired
 	private DynamoDBMapper mapper;
-	@Autowired
-	private AmazonDynamoDB dynamoDB;
 	@Autowired
 	private ESEventPublisher publisher;
 
