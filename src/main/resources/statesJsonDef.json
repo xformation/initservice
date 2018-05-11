@@ -130,5 +130,64 @@
 			"name": "End",
 			"end": true
 		}
+	],
+	"DemoSite": [
+		{
+			"name": "Shopping",
+			"target": "collectBillingInfo",
+			"event": "Start",
+			"action": "com.synectiks.state.machine.SSMAction",
+			"initial": true
+		},
+		{
+			"name": "collectBillingInfo",
+			"parent": "Shopping",
+			"target": "saveBillingInfo",
+			"event": "saveBilling",
+			"action": "com.synectiks.state.machine.SSMAction"
+		},
+		{
+			"name": "saveBillingInfo",
+			"parent": "collectBillingInfo",
+			"target": "collectShippingInfo",
+			"event": "collectShipping",
+			"action": "com.synectiks.state.machine.SSMAction"
+		},
+		{
+			"name": "collectShippingInfo",
+			"parent": "saveBillingInfo",
+			"target": "saveShippingInfo",
+			"event": "saveShipping",
+			"action": "com.synectiks.state.machine.SSMAction"
+		},
+		{
+			"name": "saveShippingInfo",
+			"parent": "collectShippingInfo",
+			"target": "confirmOrder",
+			"event": "confirm",
+			"action": "com.synectiks.state.machine.SSMAction"
+		},
+		{
+			"name": "saveShippingInfo",
+			"parent": "saveShippingInfo",
+			"target": "Complete",
+			"event": "complete",
+			"action": "com.synectiks.state.machine.SSMAction"
+		},
+		{
+			"name": "CancelOrder",
+			"parent": "Shopping",
+			"target": "Cancel",
+			"event": "cancel",
+			"action": "com.synectiks.state.machine.SSMAction"
+		},
+		{
+			"name": "Cancel",
+			"end": true
+		},
+		{
+			"name": "Complete",
+			"end": true
+		}
 	]
 }
