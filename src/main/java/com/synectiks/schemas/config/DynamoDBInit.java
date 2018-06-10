@@ -68,6 +68,7 @@ public class DynamoDBInit {
 						item.setProvisionedThroughput(throughput);
 					});
 				}
+				logger.info("Table: {}", request.getTableName());
 				DescribeTableResult result = dynamoDBClient
 						.describeTable(request.getTableName());
 				logger.info("Table status {}, {}, Row count {}", request.getTableName(),
