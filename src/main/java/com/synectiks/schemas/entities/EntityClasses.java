@@ -4,6 +4,7 @@
 package com.synectiks.schemas.entities;
 
 import com.synectiks.commons.entities.Policy;
+import com.synectiks.commons.entities.Rule;
 import com.synectiks.commons.entities.SSMState;
 import com.synectiks.commons.entities.demo.BillingAddress;
 import com.synectiks.commons.entities.demo.Cart;
@@ -34,7 +35,8 @@ public enum EntityClasses {
 	Service(Service.class),
 	States(SSMState.class),
 	Subscription(Subscription.class),
-	Policy(Policy.class);
+	Policy(Policy.class),
+	Rule(Rule.class);
 
 	private Class<? extends Entity> cls;
 	
