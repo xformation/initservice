@@ -60,7 +60,7 @@ public abstract class OneToManyConverter<T extends Entity>
 			List<T> res = new ArrayList<>();
 			list.forEach(id -> {
 				if (!IUtils.isNull(getRepository())) {
-					res.add(getRepository().findById(id));
+					res.add(getRepository().findById(id).orElse(null));
 				} else {
 					res.add(loadEntityById(id));
 				}

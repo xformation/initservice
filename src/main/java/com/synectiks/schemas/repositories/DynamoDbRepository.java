@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		return null;
 	}
 
-	@Override
 	public <S extends T> Iterable<S> save(Iterable<S> entities) {
 		assertNotNull(MSG_NULL, entities);
 		try {
@@ -77,7 +77,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		return null;
 	}
 
-	@Override
 	public T findOne(ID id) {
 		assertNotNull(MSG_NULL, id);
 		logger.trace("Loading id {}", id);
@@ -89,7 +88,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		return null;
 	}
 
-	@Override
 	public boolean exists(ID id) {
 		return (!IUtils.isNull(findOne(id)));
 	}
@@ -106,7 +104,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<T> findAll(Iterable<ID> ids) {
 		assertNotNull(MSG_NULL, ids);
 		logger.trace("findAll ids");
@@ -134,9 +131,10 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		return null;
 	}
 
-	public T findById(ID id) {
+	@Override
+	public Optional<T> findById(ID id) {
 		assertNotNull(MSG_NULL, id);
-		return findOne(id);
+		return Optional.ofNullable(findOne(id));
 	}
 
 	@Override
@@ -144,7 +142,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		return 0;
 	}
 
-	@Override
 	public void delete(ID id) {
 		assertNotNull(MSG_NULL, id);
 		try {
@@ -155,7 +152,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		}
 	}
 
-	@Override
 	public void delete(T entity) {
 		assertNotNull(MSG_NULL, entity);
 		try {
@@ -167,7 +163,6 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 		}
 	}
 
-	@Override
 	public void delete(Iterable<? extends T> entities) {
 		assertNotNull(MSG_NULL, entities);
 		try {
@@ -219,6 +214,31 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 				.withComparisonOperator(ComparisonOperator.EQ)
 				.withAttributeValueList(new AttributeValue().withS(val)));
 		return scan(exp);
+	}
+
+	@Override
+	public <S extends T> Iterable<S> saveAll(Iterable<S> entities) {
+		return save(entities);
+	}
+
+	@Override
+	public boolean existsById(ID id) {
+		return exists(id);
+	}
+
+	@Override
+	public Iterable<T> findAllById(Iterable<ID> ids) {
+		return findAll(ids);
+	}
+
+	@Override
+	public void deleteById(ID id) {
+		this.delete(id);
+	}
+
+	@Override
+	public void deleteAll(Iterable<? extends T> entities) {
+		this.deleteAll(entities);
 	}
 
 }
