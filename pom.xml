@@ -15,7 +15,7 @@
 	<description>Module to hold Database Schemas.</description>
 
 	<properties>
-		<dynamodb.version>1.11.342</dynamodb.version>
+		<dynamodb.version>1.11.550</dynamodb.version>
 	</properties>
 
 	<dependencies>
