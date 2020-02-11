@@ -193,6 +193,7 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 	 */
 	public Iterable<T> scan(DynamoDBScanExpression exp) {
 		assertNotNull(MSG_NULL, exp);
+		logger.info("Cls: " + domainClass);
 		try {
 			return mapper.scan(domainClass, exp);
 		} catch (Throwable th) {
@@ -209,6 +210,7 @@ public class DynamoDbRepository<T, ID extends Serializable> implements CrudRepos
 	 */
 	public Iterable<T> findByKeyValue(String key, String val) {
 		assertNotNull(MSG_NULL, key);
+		logger.info("findByKeyValue: " + key + ", " + val);
 		DynamoDBScanExpression exp = new DynamoDBScanExpression();
 		exp.addFilterCondition(key, new Condition()
 				.withComparisonOperator(ComparisonOperator.EQ)

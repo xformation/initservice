@@ -3,6 +3,7 @@
  */
 package com.synectiks.schemas.entities;
 
+import com.synectiks.commons.entities.EvalPolicyRuleResult;
 import com.synectiks.commons.entities.Policy;
 import com.synectiks.commons.entities.PolicyRuleResult;
 import com.synectiks.commons.entities.Rule;
@@ -40,7 +41,8 @@ public enum EntityClasses {
 	Subscription(Subscription.class),
 	Policy(Policy.class),
 	Rule(Rule.class),
-	Result(PolicyRuleResult.class);
+	Result(PolicyRuleResult.class),
+	EvalResult(EvalPolicyRuleResult.class);
 
 	private Class<? extends Entity> cls;
 	
