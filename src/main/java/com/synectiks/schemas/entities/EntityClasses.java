@@ -39,9 +39,9 @@ public enum EntityClasses {
 	Ssm(SSMachine.class),
 	States(SSMState.class),
 	Subscription(Subscription.class),
-	Policy(Policy.class),
-	Rule(Rule.class),
-	Result(PolicyRuleResult.class),
+	//Policy(Policy.class),
+	//Rule(Rule.class),
+	//Result(PolicyRuleResult.class),
 	EvalResult(EvalPolicyRuleResult.class);
 
 	private Class<? extends Entity> cls;
